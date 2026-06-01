@@ -1,0 +1,12 @@
+<?xml version="1.0"?>
+<launch>
+  <node pkg="hi226_imu"
+        name="imu"
+        type="hi226_imu"
+        output="screen">
+    <param name="port" value="/dev/imu"/>
+    <param name="model" value="hi226"/>
+    <param name="baud" value="115200"/>
+  </node>
+
+</launch>

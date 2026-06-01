@@ -1,0 +1,27 @@
+# Catkin build outputs
+/build/
+/devel/
+/install/
+/log/
+
+# Python cache
+__pycache__/
+*.py[cod]
+
+# ROS runtime logs and generated files
+.ros/
+*.bag
+*.bag.active
+
+# Editor and OS local files
+.vscode/
+.idea/
+*.swp
+*.swo
+Thumbs.db
+Desktop.ini
+
+# Native build leftovers
+*.o
+*.so
+*.exe

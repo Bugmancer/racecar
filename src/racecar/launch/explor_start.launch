@@ -1,0 +1,18 @@
+<launch>
+
+    <include file="$(find racecar)/launch/Run_car.launch" />
+    <include file="$(find racecar)/launch/Run_gmapping.launch" />
+
+
+    <node pkg="tf" type="static_transform_publisher" name="map_to_odom" args="0.0 0.0 0.0 0 0 0.0 /map /odom 1000"/>
+    <node pkg="tf" type="static_transform_publisher" name="base_to_laser" args="0.0 0.0 0.0 0 0 0.0 /base_link /laser 1000"/>
+    
+    <node name="map_server" pkg="map_server" type="map_server" args="$(find racecar)/map/ceshi1.yaml"/>
+
+    <include file="$(find racecar)/launch/move_base.launch"/>
+
+    <!--启动explore_costmap-->
+    <include file="$(find explore_lite)/launch/explore_costmap.launch" />
+       
+   
+</launch>

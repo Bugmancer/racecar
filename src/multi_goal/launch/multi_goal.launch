@@ -1,0 +1,10 @@
+<?xml version="1.0"?>
+<launch>
+    <arg name="csv_file" default="$(find multi_goal)/src/testceshi.csv" />
+    <arg name="map_frame" default="map" />
+
+    <node pkg="multi_goal" type="goal_loop.py" name="multi_goals" output="screen">
+        <param name="csv_file" value="$(arg csv_file)" />
+        <param name="map_frame" value="$(arg map_frame)" />
+    </node>
+</launch>

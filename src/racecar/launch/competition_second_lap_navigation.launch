@@ -1,0 +1,51 @@
+<?xml version="1.0"?>
+<launch>
+    <!-- Second lap: localize on the saved map and run planned navigation. -->
+    <arg name="map_file" default="$(find racecar)/map/mymap.yaml" />
+    <arg name="init_x" default="0.0" />
+    <arg name="init_y" default="0.0" />
+    <arg name="init_a" default="0.0" />
+    <arg name="baseSpeed" default="150" />
+    <arg name="baseAngle" default="0.0" />
+    <arg name="Angle_gain_p" default="-3.0" />
+    <arg name="Angle_gain_d" default="-3.0" />
+    <arg name="Lfw" default="1.5" />
+    <arg name="vp_max_base" default="300" />
+    <arg name="vp_min" default="380" />
+    <arg name="use_multi_goal" default="false" />
+    <arg name="goal_csv" default="$(find multi_goal)/src/testceshi.csv" />
+
+    <include file="$(find racecar)/launch/Run_car.launch" />
+
+    <node name="map_server" pkg="map_server" type="map_server" args="$(arg map_file)" />
+
+    <include file="$(find racecar)/launch/includes/rf2o.launch.xml" />
+    <include file="$(find encoder_driver)/launch/wheel_odom.launch" />
+
+    <node pkg="robot_localization" type="ekf_localization_node" name="ekf_se" clear_params="true">
+        <rosparam command="load" file="$(find racecar)/param/ekf_params.yaml" />
+    </node>
+
+    <include file="$(find racecar)/launch/includes/amcl.launch.xml">
+        <arg name="init_x" value="$(arg init_x)" />
+        <arg name="init_y" value="$(arg init_y)" />
+        <arg name="init_a" value="$(arg init_a)" />
+    </include>
+
+    <include file="$(find racecar)/launch/move_base.launch" />
+
+    <node pkg="racecar" type="car_controller_new" name="car_controller" output="screen">
+        <param name="Vcmd" value="1.0" />
+        <param name="baseSpeed" value="$(arg baseSpeed)" />
+        <param name="baseAngle" value="$(arg baseAngle)" />
+        <param name="Angle_gain_p" value="$(arg Angle_gain_p)" />
+        <param name="Angle_gain_d" value="$(arg Angle_gain_d)" />
+        <param name="Lfw" value="$(arg Lfw)" />
+        <param name="vp_max_base" value="$(arg vp_max_base)" />
+        <param name="vp_min" value="$(arg vp_min)" />
+    </node>
+
+    <include file="$(find multi_goal)/launch/multi_goal.launch" if="$(arg use_multi_goal)">
+        <arg name="csv_file" value="$(arg goal_csv)" />
+    </include>
+</launch>

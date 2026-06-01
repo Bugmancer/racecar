@@ -1,0 +1,37 @@
+<?xml version="1.0"?>
+<launch>
+    <!-- Competition entry.
+         First lap: obstacle-aware mapping.
+         Second lap: localization and navigation on the saved map.
+
+         Run first lap:
+           roslaunch racecar total.launch first_lap:=true
+
+         Run second lap:
+           roslaunch racecar total.launch first_lap:=false second_lap:=true
+    -->
+
+    <arg name="first_lap" default="true" />
+    <arg name="second_lap" default="false" />
+
+    <!-- Shared tuning knobs passed through to the competition launch files. -->
+    <arg name="map_file" default="$(find racecar)/map/mymap.yaml" />
+    <arg name="use_explore" default="true" />
+    <arg name="use_multi_goal" default="false" />
+    <arg name="goal_csv" default="$(find multi_goal)/src/testceshi.csv" />
+    <arg name="use_traffic_light" default="false" />
+
+    <include file="$(find racecar)/launch/competition_first_lap_mapping.launch" if="$(arg first_lap)">
+        <arg name="use_explore" value="$(arg use_explore)" />
+    </include>
+
+    <include file="$(find racecar)/launch/competition_second_lap_navigation.launch" if="$(arg second_lap)">
+        <arg name="map_file" value="$(arg map_file)" />
+        <arg name="use_multi_goal" value="$(arg use_multi_goal)" />
+        <arg name="goal_csv" value="$(arg goal_csv)" />
+    </include>
+
+    <!-- Optional second-lap traffic-light stop signal. -->
+    <node pkg="cam_infer" type="traffic_light.py" name="traffic_light" output="screen"
+          if="$(arg use_traffic_light)" />
+</launch>

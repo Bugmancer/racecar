@@ -1,0 +1,13 @@
+services:
+  ros-master:
+    container_name: ros
+    image: ros-backup 
+    restart: always
+    command: bash
+    volumes:
+        - /root/racecar:/racecar
+        - /dev:/dev
+    network_mode: "host"
+    privileged: true
+    stdin_open: true
+    tty: true

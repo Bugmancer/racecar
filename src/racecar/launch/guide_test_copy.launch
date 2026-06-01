@@ -1,0 +1,41 @@
+<launch>
+    <!--参数配置，运动是否只向前，false 则表示小车可以后退操作-->
+    <arg name="move_forward_only" default="false" />  
+    
+    <!--启动gmapping建图-->
+    <include file="$(find racecar)/launch/Run_car.launch" />
+    <include file="$(find racecar)/launch/Run_gmapping.launch" />
+
+    <node pkg="tf" type="static_transform_publisher" name="map_to_odom" args="0.0 0.0 0.0 0 0 0.0 /map /odom 1000"/>
+
+    <node pkg="tf" type="static_transform_publisher" name="base_to_laser" args="0.0 0.0 0.0 0 0 0.0 /base_link /laser 1000"/>
+    
+    <node name="map_server" pkg="map_server" type="map_server" args="$(find racecar)/map/mymap.yaml"/>
+
+    <!--启动move_base-->
+    <include file="$(find racecar)/launch/move_base.launch">
+        
+    </include>
+ 	
+  
+    <!--启动!-->
+    <node pkg="racecar" name="guide_copy" type="guide_copy" output="screen" />
+    
+    <node pkg="racecar" type="car_controller_new" respawn="false" name="car_controller" output="screen">       
+       
+        <param name="Vcmd" value="0.2" /> <!--speed of car m/s         -->
+        <!-- ESC -->
+        <param name="baseSpeed" value="15"/> 
+        <param name="baseAngle" value="0.0"/> 
+        <param name="Angle_gain_p" value="-3.0"/> 
+        <param name="Angle_gain_d" value="-3.0"/> 
+        <param name="Lfw" value="1.5"/> 
+        <param name="vp_max_base" value="20"/> 
+        <param name="vp_min" value="20"/> 
+
+    </node>
+
+
+</launch>    
+
+

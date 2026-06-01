@@ -1,0 +1,9 @@
+<?xml version="1.0"?>
+
+<launch>
+
+    
+    <node pkg="racecar" name="turn_and_stop" type="turn_and_stop" output="screen" />
+
+</launch>
+

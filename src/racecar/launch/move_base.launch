@@ -1,0 +1,22 @@
+<launch>
+
+    <node pkg="move_base" type="move_base" respawn="false" name="move_base">
+        <!-- local planner -->
+         <!--
+        <param name="base_global_planner" value="global_planner/GlobalPlanner"/>  
+         -->
+        <param name="base_global_planner" value="navfn/NavfnROS"/>  
+        <param name="base_local_planner" value="dwa_local_planner/DWAPlannerROS"/>  
+        
+
+        <rosparam file="$(find racecar)/param/dwa_local_planner_params.yaml" command="load"/>
+        <!-- costmap layers -->    
+        <rosparam file="$(find racecar)/param/local_costmap_params.yaml" command="load"/>
+        <rosparam file="$(find racecar)/param/global_costmap_params.yaml" command="load"/> 
+        <!-- move_base params -->
+        <rosparam file="$(find racecar)/param/base_global_planner_params.yaml" command="load"/>
+        <rosparam file="$(find racecar)/param/move_base_params.yaml" command="load"/>
+        <remap from="/odom" to="/odometry/filtered"/>
+
+    </node>
+</launch>
