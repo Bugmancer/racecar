@@ -54,7 +54,7 @@ def callback(data):
         if(control_speed > 1500):
             control_speed = control_speed + 30
         elif(control_speed < 1500):
-	    control_speed = control_speed - 200	
+            control_speed = control_speed - 200
         control_turn = (data.axes[2] * (turn_max - turn_min) * turn_add_once  / 2 + turn_mid) 
         #print('speed: %.2f, turn: %.2f'%(twist.linear.x,twist.angular.z))
         car_twist.linear.x = control_speed
@@ -115,10 +115,10 @@ if __name__=="__main__":
            
 
     except:
-        print "error"
+        print("error")
 
     finally:
-    	print "finally"
+        print("finally")
         twist = Twist()
         car_twist = Twist()
         twist.linear.x = 0; twist.linear.y = 0; twist.linear.z = 0

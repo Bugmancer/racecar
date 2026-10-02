@@ -39,21 +39,21 @@ if __name__=="__main__":
             key = getKey()
             twist = Twist()
             if key == '1':
-            	twist.linear.x = 1500; twist.linear.y = 0; twist.linear.z = 0
+                twist.linear.x = 1500; twist.linear.y = 0; twist.linear.z = 0
                 twist.angular.x = 0; twist.angular.y = 0; twist.angular.z = 90
-                print "vel = 0"
+                print("vel = 0")
             elif key == '2':
-            	twist.linear.x = 2500; twist.linear.y = 0; twist.linear.z = 0
+                twist.linear.x = 2500; twist.linear.y = 0; twist.linear.z = 0
                 twist.angular.x = 0; twist.angular.y = 0; twist.angular.z = 90
-                print "vel = +Max"
+                print("vel = +Max")
             elif key == '3':
-            	twist.linear.x = 500; twist.linear.y = 0; twist.linear.z = 0
+                twist.linear.x = 500; twist.linear.y = 0; twist.linear.z = 0
                 twist.angular.x = 0; twist.angular.y = 0; twist.angular.z = 90
-                print "vel = -Max"
+                print("vel = -Max")
             else:
-            	twist.linear.x = 1500; twist.linear.y = 0; twist.linear.z = 0
+                twist.linear.x = 1500; twist.linear.y = 0; twist.linear.z = 0
                 twist.angular.x = 0; twist.angular.y = 0; twist.angular.z = 90
-                print "stop"
+                print("stop")
 
             pub.publish(twist)
             
@@ -63,7 +63,7 @@ if __name__=="__main__":
                 break
 
     except:
-        print "error"
+        print("error")
 
     finally:
         twist = Twist()
